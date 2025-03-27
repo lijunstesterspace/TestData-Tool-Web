@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online File Renamer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Smart File Renamer</h1>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Files to Rename:</label>
+                <input type="file" name="files" multiple required>
+            </div>
+            
+            <div class="form-group">
+                <label>Insert Text:</label>
+                <input type="text" name="insert_str" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Position:</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="position_mode" value="prefix" checked> Prefix
+                    </label>
+                    <label>
+                        <input type="radio" name="position_mode" value="suffix"> Suffix
+                    </label>
+                    <label>
+                        <input type="radio" name="position_mode" value="custom"> Custom Position:
+                        <input type="number" name="custom_pos" min="0" value="0" disabled>
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit">Process Files</button>
+        </form>
+    </div>
+
+    <script>
+        // 启用自定义位置输入
+        document.querySelectorAll('input[type=radio][name=position_mode]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const customPosInput = document.querySelector('input[name=custom_pos]');
+                customPosInput.disabled = (radio.value !== 'custom');
+            });
+        });
+    </script>
+</body>
+</html>
